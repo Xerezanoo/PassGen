@@ -1,2 +1,4 @@
 # PassGen
-PassGen is a Password Generator
+PassGen es un Generador de Contraseñas seguras escrito en Python
+
+## ¿Cómo usarlo?
