@@ -2,18 +2,26 @@
 import string
 import secrets
 
-# Voy a definir el alfabeto que voy a usar para generar las contraseñas
+# Definir los caracteres a usar
 letras = string.ascii_letters
 digitos = string.digits
-caracteres_especiales = "@?"
-alfabeto = letras + digitos + caracteres_especiales
+simbolos = "@?!$&"
+alfabeto = letras + digitos
 
-# Ahora establezco la longitud de la contraseña
+# Establecer la longitud de la contraseña
 pwd_length = 12
 
-# Ahora creamos la contraseña
-pwd = ''
-for i in range(pwd_length):
-    pwd += ''.join(secrets.choice(alfabeto))
+# Asegurarse de que haya exactamente 2 símbolos
+pwd = []
+pwd += [secrets.choice(simbolos) for i in range(2)]  # 2 símbolos obligatorios
 
-print(pwd)
+# Completar el resto de la contraseña con letras y dígitos
+pwd += [secrets.choice(alfabeto) for i in range(pwd_length - 2)]  # Resto sin símbolos
+
+# Barajar los caracteres para que los símbolos no siempre estén al principio
+secrets.SystemRandom().shuffle(pwd)
+
+# Convertir la lista a string
+password = ''.join(pwd)
+
+print(password)
