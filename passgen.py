@@ -2,26 +2,30 @@
 import string
 import secrets
 
-# Definir los caracteres a usar
+# Configuración
+pwd_length = 18
+num_simbolos = 2
+num_digitos = 2
+
+# Caracteres disponibles
 letras = string.ascii_letters
 digitos = string.digits
 simbolos = "@?!$&"
-alfabeto = letras + digitos
 
-# Establecer la longitud de la contraseña
-pwd_length = 12
-
-# Asegurarse de que haya exactamente 2 símbolos
+# Generar partes obligatorias
 pwd = []
-pwd += [secrets.choice(simbolos) for i in range(2)]  # 2 símbolos obligatorios
+pwd += [secrets.choice(simbolos) for _ in range(num_simbolos)]
+pwd += [secrets.choice(digitos) for _ in range(num_digitos)]
+pwd += [secrets.choice(letras) for _ in range(5)]  # Asegurar al menos 5 letras
 
-# Completar el resto de la contraseña con letras y dígitos
-pwd += [secrets.choice(alfabeto) for i in range(pwd_length - 2)]  # Resto sin símbolos
+# Rellenar el resto con letras, dígitos y símbolos mezclados
+restantes = pwd_length - len(pwd)
+alfabeto_completo = letras + digitos + simbolos
+pwd += [secrets.choice(alfabeto_completo) for _ in range(restantes)]
 
-# Barajar los caracteres para que los símbolos no siempre estén al principio
+# Barajar para aleatorizar
 secrets.SystemRandom().shuffle(pwd)
 
-# Convertir la lista a string
+# Resultado final
 password = ''.join(pwd)
-
 print(password)
